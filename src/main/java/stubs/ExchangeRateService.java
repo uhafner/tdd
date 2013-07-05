@@ -4,10 +4,20 @@ package stubs;
  * Provides exchange rates.
  */
 public interface ExchangeRateService {
+    /**
+     * Unterstützte Währungen.
+     */
     public enum Currency {
-        EUR, USD, SFR
+        /** Euro. */
+        EUR,
+
+        /** Schweizer Franken. */
+        CHF,
+
+        /** US Dollar. */
+        USD,
     }
-    
+
     /**
      * Returns the current exchange rate.
      *

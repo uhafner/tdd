@@ -6,18 +6,18 @@ package exercises.tdd.stubs;
 public class LoginAction {
     static final String AUTHENTICATION_CANCELED = "Authentication canceled due to a server error.";
     static final String WRONG_USER_NAME_OR_PASSWORD = "Wrong user name or password.";
-    
-    private final IConnection connection = new DatabaseConnection();
-    
+
+    private final IConnection connection = new NullDatabaseConnection();
+
     private final String password;
     private final String user;
-    
+
     private String details;
     private String message;
     private boolean canCloseDialog;
-    
+
     private ISession session;
-    
+
     /**
      * Creates a new instance of {@link LoginAction}.
      *
@@ -30,7 +30,7 @@ public class LoginAction {
         this.password = password;
         this.user = user;
     }
-    
+
     /**
      * Runs this action.
      */
@@ -49,7 +49,7 @@ public class LoginAction {
             details = exception.getMessage();
         }
     }
-    
+
     /**
      * Returns the session.
      *
@@ -58,7 +58,7 @@ public class LoginAction {
     public ISession getSession() {
         return session;
     }
-    
+
     /**
      * Returns the message.
      *
@@ -67,7 +67,7 @@ public class LoginAction {
     public String getMessage() {
         return message;
     }
-    
+
     /**
      * Returns the details.
      *
@@ -76,7 +76,7 @@ public class LoginAction {
     public String getDetails() {
         return details;
     }
-    
+
     /**
      * Returns whether the user has been successfully authenticated.
      *
@@ -85,28 +85,52 @@ public class LoginAction {
     public boolean isSuccessfullyAuthenticated() {
         return canCloseDialog;
     }
-    
-    private static class DatabaseConnection implements IConnection {
+
+    /**
+     * A database connection that always authenticates a user (null object).
+     *
+     * @author Ulli Hafner
+     */
+    private static class NullDatabaseConnection implements IConnection {
         @Override
         public ISession authenticate(final String user, final String password) {
-            return new ISession() {
-                @Override
-                public boolean isPasswordExpired() {
-                    return false;
-                }
-                
-                @Override
-                public boolean isAuthenticated() {
-                    return true;
-                }
-                
-                @Override
-                public String getUserName() {
-                    return user;
-                }
-            };
+            return new NullSession(user);
         }
-        
+
+    }
+
+    /**
+     * A null session object.
+     *
+     * @author Ulli Hafner
+     */
+    private static final class NullSession implements ISession {
+        private final String user;
+
+        /**
+         * Creates a new instance of {@link NullSession}.
+         *
+         * @param user
+         *            the authenticated user
+         */
+        NullSession(final String user) {
+            this.user = user;
+        }
+
+        @Override
+        public boolean isPasswordExpired() {
+            return false;
+        }
+
+        @Override
+        public boolean isAuthenticated() {
+            return true;
+        }
+
+        @Override
+        public String getUserName() {
+            return user;
+        }
     }
 }
 

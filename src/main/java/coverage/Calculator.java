@@ -1,22 +1,24 @@
 package coverage;
 
 /**
- * Stellt einfache Berechnungen zur Verfügung.
+ * Stellt einfache Berechnungen zur VerfÃ¼gung.
  */
 public class Calculator {
     /**
-     * Bestimmt das Maximum der übergebenen Werte.
+     * Bestimmt das Maximum der Ã¼bergebenen Werte.
      *
-     * @param values die zu testenden Werte
+     * @param values
+     *            die zu testenden Werte
      * @return das maximum
-     * @throws IllegalArgumentException falls das array {@code values} leer ist
+     * @throws IllegalArgumentException
+     *             falls das array {@code values} leer ist
      */
     public int max(final int[] values) {
         if (values.length == 0) {
             throw new IllegalArgumentException("input must not be empty.");
         }
         int value = Integer.MIN_VALUE;
-        
+
         for (int i : values) {
             value = Math.max(value, i);
         }

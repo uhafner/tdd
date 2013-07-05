@@ -3,24 +3,24 @@ package stubs;
 import stubs.ExchangeRateService.Currency;
 
 /**
- * Währungsrechner in Euro.
+ * WÃ¤hrungsrechner in Euro.
  */
 public class EuroCalculator {
     private final ExchangeRateService webService = new YahooExchangeRateService();
-    
+
     /**
      * Rechnet den gegebenen Betrag in Euro um.
      *
      * @param amount
      *            Betrag
      * @param currency
-     *            Währung
+     *            WÃ¤hrung
      * @return Euro Betrag
      */
     public double calculate(final double amount, final Currency currency) {
         return amount * webService.getRate(currency, Currency.EUR);
     }
-    
+
     /**
      * Gets exchange rates from Yahoo.
      */
